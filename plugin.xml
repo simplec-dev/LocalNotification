@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	id="com.simplec.plugins.localnotification"
+	version="0.1.2">
+
+	<name>LocalNotification</name>
+	
+		<description>
+			This plugin control local notifications in iOS.
+		</description>
+	
+		<license>MIT</license>
+		
+	<engines>
+		<engine name="cordova" version=">=2.3.0" />
+	</engines>
+	
+	
+	<asset src="www/LocalNotification.js" target="LocalNotification.js" />
+	
+	<!-- ios -->
+	<platform name="ios">
+		<!-- Cordova < 2.3 -->
+        <plugins-plist key="LocalNotification" string="LocalNotification" />
+        
+		<!-- Cordova >= 2.3 -->
+		<config-file target="config.xml" parent="plugins">
+			<plugin name="LocalNotification" value="LocalNotification"/>
+		</config-file>
+
+		
+		<header-file src="src/ios/LocalNotification.h" />
+		<source-file src="src/ios/LocalNotification.m" />
+	</platform>
+</plugin>
