@@ -6,24 +6,13 @@
 
 #import <Foundation/Foundation.h>
 
-/* FOR PHONEGAP 1.4 < */
-#ifdef PHONEGAP_FRAMEWORK
-#import <PhoneGap/PGPlugin.h>
-#else
-#import "PGPlugin.h"
-#endif
-
-/* 
-UNCOMMENT FOR CORDOVA
-
 #ifdef CORDOVA_FRAMEWORK
-#import <Cordova/CDVPlugin.h>
+#import <CORDOVA/CDVPlugin.h>
 #else
-#import "CDVPlugin.h"
+#import "CORDOVA/CDVPlugin.h"
 #endif
 
-*/
-@interface LocalNotification : PGPlugin {
+@interface LocalNotification : CDVPlugin {
     
 }
 - (void)addNotification:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
