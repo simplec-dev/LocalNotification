@@ -1,48 +1,71 @@
-/**
- * Phonegap LocalNotification Plugin Copyright (c) Greg Allen 2011 Updates Drew
- * Dahlman 2012
- * 
- * MIT Licensed
- * 
- * Usage: plugins.localNotification.add({ date: new Date(), message: 'This is a
- * notification', badge: 1, id: 123,
- * sound:'sub.caf',background:'app.background()',foreground:'app.running()' });
- * plugins.localNotification.cancel(123); plugins.localNotification.cancelAll();
- */
+
 var cordovaRef = window.PhoneGap || window.Cordova || window.cordova;
 
 var LocalNotification = function() {
 };
 
 LocalNotification.prototype.add = function(options) {
-	var defaults = {
-		date : false,
-		message : '',
-		hasAction : true,
-		action : 'View',
-		repeat : '',
-		badge : 0,
-		id : 0,
-		sound : '',
-		background : '',
-		foreground : ''
-	};
-	for ( var key in defaults) {
-		if (typeof options[key] !== "undefined")
-			defaults[key] = options[key];
-	}
-	if (typeof defaults.date == 'object') {
-		defaults.date = Math.round(defaults.date.getTime() / 1000);
-	}
-	cordovaRef.exec(null, null, "LocalNotification", "addNotification", [defaults]);
+    var defaults = {
+            
+            fireDate        : new Date(new Date().getTime() + 5000),
+            alertBody       : "This is a local notification.",
+            repeatInterval  : "" ,
+            soundName       : "beep.caf" ,
+            badge           : 0  ,
+            notificationId  : 1  ,
+            background      : function(notificationId){},
+            foreground      : function(notificationId){}                
+        };
+            
+        if(options){
+            for (var key in defaults) {
+                if (typeof options[key] !== "undefined"){
+                defaults[key] = options[key];
+                }
+            }
+        }
+        
+        if (typeof defaults.fireDate == 'object') {
+            defaults.fireDate = Math.round(defaults.fireDate.getTime()/1000);
+        }
+            
+        cordova.exec(
+            function(params) {
+                window.setTimeout(function(){
+                    if(typeof defaults.foreground == 'function'){
+                      if(params.appState == "active") {
+                        defaults.foreground(params.notificationId);
+                        return;
+                      }
+                    }
+                    if(typeof defaults.background == 'function'){
+                      if(params.appState != "active") {
+                        defaults.background(params.notificationId);
+                        return;
+                      }
+                    }
+                }, 1);
+            }, 
+            null, 
+            "LocalNotification" , 
+            "addNotification"   , 
+            [
+                defaults.fireDate        ,
+                defaults.alertBody       ,
+                defaults.repeatInterval  ,
+                defaults.soundName       ,
+                defaults.notificationId
+            ]
+        );
+
 };
 
-LocalNotification.prototype.cancel = function(id) {
-	cordovaRef.exec(null, null, "LocalNotification", "cancelNotification", [id]);
+LocalNotification.prototype.cancel =  function(str, callback) {
+    cordova.exec(callback, null, "LocalNotification", "cancelNotification", [str]);
 };
 
 LocalNotification.prototype.cancelAll = function() {
-	cordovaRef.exec(null, null, "LocalNotification", "cancelAllNotifications", null);
+    cordova.exec(callback, null, "LocalNotification", "cancelAllNotifications", []);
 };
 
 if (cordovaRef) {
