@@ -34,15 +34,16 @@ LocalNotification.prototype.add = function(options) {
 	if (typeof defaults.date == 'object') {
 		defaults.date = Math.round(defaults.date.getTime() / 1000);
 	}
-	cordovaRef.exec("LocalNotification.addNotification", defaults);
+	cordovaRef.exec(null, null, "LocalNotification", "addNotification", defaults);
 };
 
 LocalNotification.prototype.cancel = function(id) {
-	cordovaRef.exec("LocalNotification.cancelNotification", id);
+	cordovaRef.exec(null, null, "LocalNotification", "cancelNotification", id);
 };
 
-LocalNotification.prototype.cancelAll = function(id) {
+LocalNotification.prototype.cancelAll = function() {
 	cordovaRef.exec("LocalNotification.cancelAllNotifications");
+	cordovaRef.exec(null, null, "LocalNotification", "cancelAllNotifications", null);
 };
 
 if (cordovaRef) {
