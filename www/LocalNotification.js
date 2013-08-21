@@ -9,6 +9,7 @@ LocalNotification.prototype.add = function(options) {
             
             fireDate        : new Date(new Date().getTime() + 5000),
             alertBody       : "This is a local notification.",
+            action			: 'View',
             repeatInterval  : "" ,
             soundName       : "beep.caf" ,
             badge           : 0  ,
@@ -52,9 +53,11 @@ LocalNotification.prototype.add = function(options) {
             [
                 defaults.fireDate        ,
                 defaults.alertBody       ,
+                defaults.action       ,
                 defaults.repeatInterval  ,
                 defaults.soundName       ,
-                defaults.notificationId
+                defaults.notificationId,
+                defaults.badge
             ]
         );
 
