@@ -73,6 +73,13 @@
     
 }
 
+- (void)setBadgeNumber:(CDVInvokedUrlCommand*)command {
+	NSInteger badge 			= [[command.arguments objectAtIndex:0] intValue];
+    
+	[[UIApplication sharedApplication] setApplicationIconBadgeNumber: badge];
+    
+}
+
 - (void)didReceiveLocalNotification:(NSNotification *)notification
 {
     

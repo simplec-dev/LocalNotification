@@ -10,5 +10,6 @@
 - (void)addNotification:(CDVInvokedUrlCommand*)command;
 - (void)cancelNotification:(CDVInvokedUrlCommand*)command;
 - (void)cancelAllNotifications:(CDVInvokedUrlCommand*)command;
+- (void)setBadgeNumber:(CDVInvokedUrlCommand*)command;
 
 @end
