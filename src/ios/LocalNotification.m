@@ -10,7 +10,10 @@
 
 -(void)addNotification:(CDVInvokedUrlCommand*)command {
         
-    NSMutableDictionary *repeatDict = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *repeatDict = [[NSMutableDictionary alloc] init]; 
+    [repeatDict setObject:[NSNumber numberWithInt:NSSecondCalendarUnit     ] forKey:@"second"   ];
+    [repeatDict setObject:[NSNumber numberWithInt:NSMinuteCalendarUnit     ] forKey:@"minute"   ];
+    [repeatDict setObject:[NSNumber numberWithInt:NSHourCalendarUnit     ] forKey:@"hourly"   ];
     [repeatDict setObject:[NSNumber numberWithInt:NSDayCalendarUnit     ] forKey:@"daily"   ];
     [repeatDict setObject:[NSNumber numberWithInt:NSWeekCalendarUnit    ] forKey:@"weekly"  ];
     [repeatDict setObject:[NSNumber numberWithInt:NSMonthCalendarUnit   ] forKey:@"monthly" ];
@@ -21,15 +24,20 @@
 
 	double fireDate             = [[command.arguments objectAtIndex:0] doubleValue];
     NSString *alertBody         =  [command.arguments objectAtIndex:1];
-    NSNumber *repeatInterval    =  [command.arguments objectAtIndex:2];
-    NSString *soundName         =  [command.arguments objectAtIndex:3];
-    NSString *notificationId    =  [command.arguments objectAtIndex:4];
+	NSString *action 			=  [command.arguments objectAtIndex:2];
+    NSNumber *repeatInterval    =  [command.arguments objectAtIndex:3];
+    NSString *soundName         =  [command.arguments objectAtIndex:4];
+    NSString *notificationId    =  [command.arguments objectAtIndex:5];
+	NSInteger badge 			= [[command.arguments objectAtIndex:6] intValue];
     
     notif.alertBody         = ([alertBody isEqualToString:@""])?nil:alertBody;
+	notif.alertAction 		= ([action isEqualToString:@""])?nil:action;
+	notif.hasAction 		= (notif.alertAction==nil)?0:1;
     notif.fireDate          = [NSDate dateWithTimeIntervalSince1970:fireDate];
     notif.repeatInterval    = [[repeatDict objectForKey: repeatInterval] intValue];
     notif.soundName         = soundName;
     notif.timeZone          = [NSTimeZone defaultTimeZone];
+    notif.applicationIconBadgeNumber = badge;
     
 	NSDictionary *userDict = [NSDictionary dictionaryWithObjectsAndKeys:
                                 notificationId    , @"notificationId",
@@ -50,13 +58,11 @@
 	NSArray *notifications      = [[UIApplication sharedApplication] scheduledLocalNotifications];
     
 	for (UILocalNotification *notification in notifications) {
-        
 		NSString *notId = [notification.userInfo objectForKey:@"notificationId"];
         
 		if ([notificationId isEqualToString:notId]) {
 			[[UIApplication sharedApplication] cancelLocalNotification: notification];
 		}
-        
 	}
 
 }
