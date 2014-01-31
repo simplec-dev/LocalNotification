@@ -30,7 +30,7 @@ LocalNotification.prototype.add = function(options) {
             defaults.fireDate = Math.round(defaults.fireDate.getTime()/1000);
         }
             
-        cordova.exec(
+        cordovaRef.exec(
             function(params) {
                 window.setTimeout(function(){
                     if(typeof defaults.foreground == 'function'){
@@ -64,15 +64,15 @@ LocalNotification.prototype.add = function(options) {
 };
 
 LocalNotification.prototype.setBadgeNumber =  function(badgeNumber, callback) {
-    cordova.exec(callback, null, "LocalNotification", "setBadgeNumber", [badgeNumber]);
+	cordovaRef.exec(callback, null, "LocalNotification", "setBadgeNumber", [badgeNumber]);
 };
 
 LocalNotification.prototype.cancel =  function(str, callback) {
-    cordova.exec(callback, null, "LocalNotification", "cancelNotification", [str]);
+	cordovaRef.exec(callback, null, "LocalNotification", "cancelNotification", [str]);
 };
 
 LocalNotification.prototype.cancelAll = function(callback) {
-    cordova.exec(callback, null, "LocalNotification", "cancelAllNotifications", []);
+	cordovaRef.exec(callback, null, "LocalNotification", "cancelAllNotifications", []);
 };
 
 if (cordovaRef) {

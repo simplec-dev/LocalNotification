@@ -17,7 +17,7 @@
 	</engines>
 	
 	<js-module src="www/LocalNotification.js" name="LocalNotification">
-		<clobbers target="LocalNotification" />
+		<clobbers target="window.plugins.localNotification" />
 	</js-module>
 	
 	<!-- ios -->
