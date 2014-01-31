@@ -1,6 +1,4 @@
 
-var cordovaRef = window.PhoneGap || window.Cordova || window.cordova;
-
 var LocalNotification = function() {
 };
 
@@ -30,7 +28,7 @@ LocalNotification.prototype.add = function(options) {
             defaults.fireDate = Math.round(defaults.fireDate.getTime()/1000);
         }
             
-        cordovaRef.exec(
+        cordova.exec(
             function(params) {
                 window.setTimeout(function(){
                     if(typeof defaults.foreground == 'function'){
@@ -64,22 +62,15 @@ LocalNotification.prototype.add = function(options) {
 };
 
 LocalNotification.prototype.setBadgeNumber =  function(badgeNumber, callback) {
-	cordovaRef.exec(callback, null, "LocalNotification", "setBadgeNumber", [badgeNumber]);
+	cordova.exec(callback, null, "LocalNotification", "setBadgeNumber", [badgeNumber]);
 };
 
 LocalNotification.prototype.cancel =  function(str, callback) {
-	cordovaRef.exec(callback, null, "LocalNotification", "cancelNotification", [str]);
+	cordova.exec(callback, null, "LocalNotification", "cancelNotification", [str]);
 };
 
 LocalNotification.prototype.cancelAll = function(callback) {
-	cordovaRef.exec(callback, null, "LocalNotification", "cancelAllNotifications", []);
+	cordova.exec(callback, null, "LocalNotification", "cancelAllNotifications", []);
 };
 
-if (cordovaRef) {
-	if (!window.plugins) {
-		window.plugins = {};
-	}
-	if (!window.plugins.localNotification) {
-		window.plugins.localNotification = new LocalNotification();
-	}
-}
+module.exports = new LocalNotification();
