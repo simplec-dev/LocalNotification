@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="com.simplec.plugins.localnotification"
-	version="0.3.5">
+	version="0.3.6">
 
 	<name>LocalNotification</name>
 	
@@ -26,6 +26,7 @@
 		<config-file target="config.xml" parent="/*">
 			<feature name="LocalNotification">
 				<param name="ios-package" value="LocalNotification" />
+                <param name="onload" value="true" />
 			</feature>
 		</config-file>
 
