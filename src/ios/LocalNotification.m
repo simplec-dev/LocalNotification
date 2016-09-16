@@ -89,18 +89,21 @@
     
     NSString* stateStr = (state == UIApplicationStateActive ? @"active" : @"background");
     
-    CDVPluginResult* pluginResult = nil;
-    NSString* javaScript          = nil;
+    //CDVPluginResult* pluginResult = nil;
+    //NSString* javaScript          = nil;
     
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [params setObject:stateStr forKey:@"appState"];
     [params setObject:[notif.userInfo objectForKey:@"notificationId"] forKey:@"notificationId"];
     
+
+    CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:params];
+    [self.commandDelegate sendPluginResult:pr callbackId:command.callbackId];
     
-    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK  messageAsDictionary:params];
-    javaScript   = [pluginResult toSuccessCallbackString: [notif.userInfo objectForKey:@"callbackId"]];
+  //  pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK  messageAsDictionary:params];
+  //  javaScript   = [pluginResult toSuccessCallbackString: [notif.userInfo objectForKey:@"callbackId"]];
     
-    [self writeJavascript:javaScript];
+  //  [self writeJavascript:javaScript];
     
 }
 
